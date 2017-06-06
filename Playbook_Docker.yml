@@ -1,4 +1,4 @@
-- hosts: all
+- hosts: '{{ myhost }}'
   remote_user: ansible
   become: true
   become_user: root
