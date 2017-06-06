@@ -1,6 +1,8 @@
 - hosts: all
-  remote_user: ec2-user
+  remote_user: ansible
+  become: true
   become_user: root
+  become_method: sudo
   connection: ssh
   gather_facts: yes
   vars:
