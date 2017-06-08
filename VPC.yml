@@ -20,18 +20,18 @@
         - cidr: 10.0.1.0/24
           az: us-east-1b
           resource_tags: { "Environment" : "Dev" , "Tier" : "App" }
-    - name: Creating an internet gateway
-      ec2_vpc_igw:
+   - name: Creating an internet gateway
+     ec2_vpc_igw:
            region: us-east-1
            state: present
            vpc_id: "{{ vpc.vpc_id }}"
-    - name: creating a route_tables
-      route_tables:
+   - name: creating a route_tables
+     route_tables:
        - subnets:
            - 10.0.0.0/24
            - 10.0.1.0/24
          routes:
             - dest: 0.0.0.0/0
               gw: igw
-   register: vpc
+     register: vpc
          
