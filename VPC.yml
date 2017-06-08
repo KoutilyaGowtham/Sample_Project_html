@@ -6,25 +6,32 @@
   connection: ssh
   gather_facts: yes
 - tasks:
-- ec2_vpc:
-        state: present
-        cidr_block: 10.0.0.0/16
-        resource_tags: { "Environment" : "Development" }
-        region: us-east-1
-	subnets:
-	- cidr: 10.0.0.0/24
+   - name: Creating a vpc
+     ec2_vpc:
+       state: present
+       cidr_block: 10.0.0.0/16
+       resource_tags: { "Name" : "Test" }
+       region: us-east-1
+   - name: Creating a subnets 
+     subnets:
+        - cidr: 10.0.0.0/24
           az: us-east-1a
           resource_tags: { "Environment" : "Dev" , "Tier" : "Web" }
         - cidr: 10.0.1.0/24
           az: us-east-1b
           resource_tags: { "Environment" : "Dev" , "Tier" : "App" }
-	 internet_gateway: True
-	 route_tables:
-	  - subnets:
-	     - 10.0.0.0/24
-	     - 10.0.1.0/24
-	    routes:
-	       - dest: 0.0.0.0/0
-	       gw: igw
+    - name: Creating an internet gateway
+      ec2_vpc_igw:
+           region: us-east-1
+           state: present
+           vpc_id: "{{ vpc.vpc_id }}"
+    - name: creating a route_tables
+      route_tables:
+       - subnets:
+           - 10.0.0.0/24
+           - 10.0.1.0/24
+         routes:
+            - dest: 0.0.0.0/0
+              gw: igw
    register: vpc
          
