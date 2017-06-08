@@ -1,23 +1,28 @@
 --- # Creating VPC using ansible playbook
+- hosts: '{{ myhost }}'
+  remote_user: ec2-user
+  become_method: sudo
+  connection: ssh
+  gather_facts: yes
 - ec2_vpc:
         state: present
         cidr_block: 10.0.0.0/16
-         resource_tags: { "Environment" : "Development" }
-         region: us-east-1
-         subnets:
+        resource_tags: { "Environment" : "Development" }
+        region: us-east-1
+        subnets:
   	- cidr: 10.0.0.0/24
-	   az: us-east-1a
-	   resource_tags: { "Environment" : "Dev" , "Tier" : "Web" }
+	    az: us-east-1a
+	    resource_tags: { "Environment" : "Dev" , "Tier" : "Web" }
 	- cidr: 10.0.1.0/24
-	   az: us-east-1b
-	   resource_tags: { "Environment" : "Dev" , "Tier" : "App" }
-          internet_gateway: True
-          route_tables:
-                  - subnets:
-     		- 10.0.0.0/24
-	   	- 10.0.1.0/24
-	      routes:
-		- dest: 0.0.0.0/0
-		   gw: igw
- register: vpc
+	    az: us-east-1b
+	    resource_tags: { "Environment" : "Dev" , "Tier" : "App" }
+        internet_gateway: True
+        route_tables:
+        - subnets:
+     	     - 10.0.0.0/24
+	     - 10.0.1.0/24
+	  routes:
+	     - dest: 0.0.0.0/0
+	       gw: igw
+  register: vpc
          
