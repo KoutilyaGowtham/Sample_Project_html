@@ -10,19 +10,19 @@
         resource_tags: { "Environment" : "Development" }
         region: us-east-1
         subnets:
-  	- cidr: 10.0.0.0/24
-	    az: us-east-1a
-	    resource_tags: { "Environment" : "Dev" , "Tier" : "Web" }
-	- cidr: 10.0.1.0/24
-	    az: us-east-1b
-	    resource_tags: { "Environment" : "Dev" , "Tier" : "App" }
-        internet_gateway: True
-        route_tables:
-        - subnets:
-     	     - 10.0.0.0/24
+        - cidr: 10.0.0.0/24
+            az: us-east-1a
+            resource_tags: { "Environment" : "Dev" , "Tier" : "Web" }
+        - cidr: 10.0.1.0/24
+            az: us-east-1b
+            resource_tags: { "Environment" : "Dev" , "Tier" : "App" }
+	    internet_gateway: True
+	  route_tables:
+	  - subnets:
+	     - 10.0.0.0/24
 	     - 10.0.1.0/24
-	  routes:
-	     - dest: 0.0.0.0/0
+	    routes:
+	       - dest: 0.0.0.0/0
 	       gw: igw
-  register: vpc
+   register: vpc
          
